@@ -16,3 +16,7 @@ insert into place(id, name) values('pl_id_1', 'pl_name_1');
 insert into user(user_id, user_name) values('user_id_1', 'user_name_1');
 
 insert into review (id, place_id, user_id, content) values ('rw_id_1', 'pl_id_1', 'user_id_1', 'content1');
+
+
+insert into point_history (id, description, point, review_place_id, review_user_id) values ('pt_id_1', 'descr1', 1, 'pl_id_1', 'user_id_1');
+insert into point_history (id, description, point, review_place_id, review_user_id) values ('pt_id_2', 'descr1', 1, 'pl_id_1', 'user_id_1');
