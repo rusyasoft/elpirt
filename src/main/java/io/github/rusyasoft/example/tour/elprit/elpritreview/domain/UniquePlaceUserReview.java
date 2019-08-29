@@ -11,6 +11,9 @@ import java.io.Serializable;
 
 @Embeddable
 @Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UniquePlaceUserReview implements Serializable {
     @Column
     private String placeId;
