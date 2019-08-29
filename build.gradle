@@ -27,5 +27,6 @@ dependencies {
     implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 
     compile 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

@@ -6,18 +6,23 @@ public enum  EventType {
     REVIEW("REVIEW"),
     NONE("NONE");
 
-    String code;
+    private String code;
 
     EventType(String code) {
         this.code = code;
     }
 
     @JsonValue
-    public String value() {
+    public String getCode() {
         return this.code;
     }
 
     public static EventType fromString(String value) {
-        return EventType.valueOf(value);
+        for (EventType eventType : EventType.values()) {
+            if (eventType.code.equalsIgnoreCase(value)) {
+                return eventType;
+            }
+        }
+        throw new IllegalArgumentException("No EventType with value " + value + " was found");
     }
 }

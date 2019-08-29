@@ -22,7 +22,7 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("io.github.rusyasoft.example.bank.ipoteka"))
+                .apis(RequestHandlerSelectors.basePackage("io.github.rusyasoft.example"))
                 .build();
     }
 
