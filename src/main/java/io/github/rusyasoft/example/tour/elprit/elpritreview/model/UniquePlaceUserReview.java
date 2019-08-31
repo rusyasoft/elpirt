@@ -1,4 +1,4 @@
-package io.github.rusyasoft.example.tour.elprit.elpritreview.domain;
+package io.github.rusyasoft.example.tour.elprit.elpritreview.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,4 +20,6 @@ public class UniquePlaceUserReview implements Serializable {
 
     @Column
     private String userId;
+
+
 }

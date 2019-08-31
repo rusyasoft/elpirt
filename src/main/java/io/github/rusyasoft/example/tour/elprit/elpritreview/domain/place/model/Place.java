@@ -1,4 +1,4 @@
-package io.github.rusyasoft.example.tour.elprit.elpritreview.domain;
+package io.github.rusyasoft.example.tour.elprit.elpritreview.domain.place.model;
 
 import lombok.Data;
 

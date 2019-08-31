@@ -1,7 +1,7 @@
-package io.github.rusyasoft.example.tour.elprit.elpritreview.repository;
+package io.github.rusyasoft.example.tour.elprit.elpritreview.domain.review.repository;
 
-import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.Review;
-import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.UniquePlaceUserReview;
+import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.review.model.Review;
+import io.github.rusyasoft.example.tour.elprit.elpritreview.model.UniquePlaceUserReview;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

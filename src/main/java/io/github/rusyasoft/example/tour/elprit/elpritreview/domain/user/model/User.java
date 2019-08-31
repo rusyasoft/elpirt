@@ -1,4 +1,4 @@
-package io.github.rusyasoft.example.tour.elprit.elpritreview.domain;
+package io.github.rusyasoft.example.tour.elprit.elpritreview.domain.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

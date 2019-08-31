@@ -1,4 +1,4 @@
-package io.github.rusyasoft.example.tour.elprit.elpritreview.domain;
+package io.github.rusyasoft.example.tour.elprit.elpritreview.domain.review.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Builder
