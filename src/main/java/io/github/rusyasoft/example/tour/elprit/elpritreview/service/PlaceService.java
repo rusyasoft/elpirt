@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -71,6 +72,7 @@ public class PlaceService {
         return !reviewRepository.reviewExistForPlace(placeId);
     }
 
+    @Transactional
     public User addReview(Review review) {
 
         List<PointHistory> pointHistoryList = pointService.calculatePoints(review, ActionType.ADD);
@@ -83,6 +85,7 @@ public class PlaceService {
         return userService.accumulatePoint(user, sumOfPoints);
     }
 
+    @Transactional
     public User modifyReview(Review review) {
         List<PointHistory> pointHistoryList = pointService.calculatePoints(review, ActionType.MOD);
         storeReviewsPhotosAndPoints(review, pointHistoryList);
@@ -94,6 +97,7 @@ public class PlaceService {
         return userService.accumulatePoint(user, sumOfPoints);
     }
 
+    @Transactional
     public User deleteReview(Review review) {
 
         List<PointHistory> pointHistoryList = pointService.calculatePoints(review, ActionType.DELETE);

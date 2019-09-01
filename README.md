@@ -65,3 +65,8 @@ If attachedPhotoIds contain any photoId then it will be added to our photo list.
 Now we are deleting content and all attached photos by giving their ID list.
 PhotoIds list defines which photos must be deleted from the list. 
 Empty content field shows our intention for deleting content.
+
+
+### Architecture
+
+![main-architecture](elpirt-review-api.jpg)

@@ -14,6 +14,16 @@ public class ReviewService {
     private PlaceService placeService;
 
     public User processReviewEvent(EventParam eventParam) {
+        switch (eventParam.getAction()) {
+            case ADD: return placeService.addReview(eventParamToReview(eventParam));
+            case MOD: return placeService.modifyReview(eventParamToReview(eventParam));
+            case DELETE: return placeService.deleteReview(eventParamToReview(eventParam));
+        }
+
+        return null;
+    }
+
+    private Review eventParamToReview(EventParam eventParam) {
         UniquePlaceUserReview uniquePlaceUserReview = UniquePlaceUserReview.builder()
                 .placeId(eventParam.getPlaceId())
                 .userId(eventParam.getUserId())
@@ -27,14 +37,7 @@ public class ReviewService {
                 .photoIdList(eventParam.getAttachedPhotoIds())
                 .build();
 
-        User resultUser = null;
-        switch (eventParam.getAction()) {
-            case ADD: resultUser = placeService.addReview(review); break;
-            case MOD: resultUser = placeService.modifyReview(review); break;
-            case DELETE: resultUser = placeService.deleteReview(review); break;
-        }
-
-        return resultUser;
+        return review;
     }
 
 }
