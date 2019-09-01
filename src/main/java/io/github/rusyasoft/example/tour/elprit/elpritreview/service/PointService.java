@@ -1,6 +1,7 @@
 package io.github.rusyasoft.example.tour.elprit.elpritreview.service;
 
 import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.point.model.PointHistory;
+import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.review.exception.ReviewAlreadyExistException;
 import io.github.rusyasoft.example.tour.elprit.elpritreview.model.UniquePlaceUserReview;
 import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.review.model.Review;
 import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.review.model.ReviewPhoto;
@@ -35,7 +36,7 @@ public class PointService {
 
         // check the user has a review or not
         if (placeService.doesUserHasReviewForPlace(review.getUniquePlaceUserReview())) {
-            throw new RuntimeException("Review By this User Already Exist");
+            throw new ReviewAlreadyExistException("Review By this User Already Exist");
         }
 
         if (StringUtils.hasText(review.getContent())) {
@@ -57,9 +58,7 @@ public class PointService {
     private List<PointHistory> calculateModifyReviewPoints(Review review) {
         UniquePlaceUserReview uniquePlaceUserReview = review.getUniquePlaceUserReview();
         Review beforeReview = placeService.getReview(uniquePlaceUserReview);
-        if (Objects.isNull(beforeReview)) {
-            throw new RuntimeException("This user has no review on this place");
-        }
+
         List<PointHistory> pointHistoryList = new ArrayList<>();
 
         review.setFirstReview(beforeReview.getFirstReview());
@@ -95,9 +94,7 @@ public class PointService {
     private List<PointHistory> calculateDeleteReviewPoints(Review review) {
         UniquePlaceUserReview uniquePlaceUserReview = review.getUniquePlaceUserReview();
         Review beforeReview = placeService.getReview(uniquePlaceUserReview);
-        if (Objects.isNull(beforeReview)) {
-            throw new RuntimeException("This user has no review on this place");
-        }
+
         List<PointHistory> pointHistoryList = new ArrayList<>();
 
         /// check the content

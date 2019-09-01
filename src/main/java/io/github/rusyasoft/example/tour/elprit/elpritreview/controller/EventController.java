@@ -20,7 +20,7 @@ public class EventController {
     @PostMapping(value = {"/events"})
     public ResponseEntity<User> addEvent(@RequestBody EventParam eventParam) {
 
-        User user = eventService.addEvent(eventParam);
+        User user = eventService.onEvent(eventParam);
 
         return ResponseEntity.ok(user);
     }

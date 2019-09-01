@@ -1,6 +1,9 @@
 package io.github.rusyasoft.example.tour.elprit.elpritreview.service;
 
+import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.place.exception.PlaceNotFoundException;
 import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.point.model.PointHistory;
+import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.review.exception.ReviewAlreadyExistException;
+import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.review.exception.ReviewNotFoundException;
 import io.github.rusyasoft.example.tour.elprit.elpritreview.model.UniquePlaceUserReview;
 import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.user.model.User;
 import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.place.model.Place;
@@ -43,14 +46,10 @@ public class PlaceService {
     public Place getPlaceById(String placeId) {
 
         if (StringUtils.isEmpty(placeId)) {
-            throw new RuntimeException("empty placeId has been provided!");
+            throw new PlaceNotFoundException("empty placeId has been provided!");
         }
 
-        try {
-            return placeRepository.getOne(placeId);
-        } catch (Exception ex) {
-            throw new RuntimeException("Error happened while getting Place by ID: " + placeId);
-        }
+        return placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException("No place found with id: " + placeId));
 
     }
 
@@ -130,7 +129,7 @@ public class PlaceService {
             reviewPhotoList.add(reviewPhoto);
 
             if (reviewPhotoRepository.existsById(reviewPhoto.getId())) {
-                throw new RuntimeException("The photoReview with id: " + reviewPhoto.getId() + " already exist");
+                throw new ReviewAlreadyExistException("The photoReview with id: " + reviewPhoto.getId() + " already exist");
             } else {
                 reviewPhotoRepository.save(reviewPhoto);
             }
@@ -156,7 +155,10 @@ public class PlaceService {
 
     //TODO: should we move this review getter into the ReviewService ???
     public Review getReview(UniquePlaceUserReview uniquePlaceUserReview) {
-        return reviewRepository.getOne(uniquePlaceUserReview);
+        Optional<Review> optionalReview = reviewRepository.findById(uniquePlaceUserReview);
+        return optionalReview.orElseThrow(() -> new ReviewNotFoundException("No Review Found for PlaceID: "
+                + uniquePlaceUserReview.getPlaceId() + " and UserID: " + uniquePlaceUserReview.getUserId()));
+
     }
 
     public void deleteReviewPhoto(ReviewPhoto reviewPhoto) {
