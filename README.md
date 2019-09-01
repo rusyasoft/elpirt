@@ -7,6 +7,14 @@
 
 ### Operations
 
+In total three operations are allowed: add, modify and delete. These operation commands can be called in a two way:
+- All commands goes through POST command. Then ActionType field must be checked by the sender side
+- Commands are following the RESTful VERBS: PUT, DELETE. if the PUT is used then ActionType is changed to MOD type which means modification.
+Controller with DELETE verb would change ActionType to DELETE.
+
+##### Detail Commands
+
+
 - add
 
 ```

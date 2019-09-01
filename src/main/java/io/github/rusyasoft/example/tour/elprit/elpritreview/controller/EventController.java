@@ -2,6 +2,7 @@ package io.github.rusyasoft.example.tour.elprit.elpritreview.controller;
 
 import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.user.model.User;
 import io.github.rusyasoft.example.tour.elprit.elpritreview.model.dto.EventParam;
+import io.github.rusyasoft.example.tour.elprit.elpritreview.model.type.ActionType;
 import io.github.rusyasoft.example.tour.elprit.elpritreview.service.EventService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,30 +19,32 @@ public class EventController {
 
     @ApiOperation(value = "Event Add", response = ResponseEntity.class)
     @PostMapping(value = {"/events"})
-    public ResponseEntity<User> addEvent(@RequestBody EventParam eventParam) {
+    public ResponseEntity<User> postEvent(@RequestBody EventParam eventParam) {
 
         User user = eventService.onEvent(eventParam);
 
         return ResponseEntity.ok(user);
     }
 
-//    @ApiOperation(value = "Event Modify", response = ResponseEntity.class)
-//    @PutMapping(value = {"/events"})
-//    public ResponseEntity<User> modifyEvent(@RequestBody EventParam eventParam) {
-//
-//        User user = eventService.modifyEvent(eventParam);
-//
-//        return ResponseEntity.ok(user);
-//    }
-//
-//    @ApiOperation(value = "Event Delete", response = ResponseEntity.class)
-//    @DeleteMapping(value = {"/events"})
-//    public ResponseEntity<User> deleteEvent(@RequestBody EventParam eventParam) {
-//
-//        User user = eventService.deleteEvent(eventParam);
-//
-//        return ResponseEntity.ok(user);
-//    }
+    @ApiOperation(value = "Event Modify", response = ResponseEntity.class)
+    @PutMapping(value = {"/events"})
+    public ResponseEntity<User> putEvent(@RequestBody EventParam eventParam) {
+
+        eventParam.setAction(ActionType.MOD);
+        User user = eventService.onEvent(eventParam);
+
+        return ResponseEntity.ok(user);
+    }
+
+    @ApiOperation(value = "Event Delete", response = ResponseEntity.class)
+    @DeleteMapping(value = {"/events"})
+    public ResponseEntity<User> deleteEvent(@RequestBody EventParam eventParam) {
+
+        eventParam.setAction(ActionType.DELETE);
+        User user = eventService.onEvent(eventParam);
+
+        return ResponseEntity.ok(user);
+    }
 
 
 
