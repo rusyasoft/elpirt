@@ -14,11 +14,9 @@ public class UserService {
     private UserRepository userRepository;
 
     public User getUserById(String userId) {
-
         if (StringUtils.isEmpty(userId)) {
             throw new UserNotFoundException("empty userId has been provided!");
         }
-
         return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("Error happened while getting User by ID: " + userId));
     }
 

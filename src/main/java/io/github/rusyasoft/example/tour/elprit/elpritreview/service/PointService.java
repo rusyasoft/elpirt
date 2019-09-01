@@ -1,6 +1,7 @@
 package io.github.rusyasoft.example.tour.elprit.elpritreview.service;
 
 import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.point.model.PointHistory;
+import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.point.repository.PointHistoryRepository;
 import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.review.exception.ReviewAlreadyExistException;
 import io.github.rusyasoft.example.tour.elprit.elpritreview.model.UniquePlaceUserReview;
 import io.github.rusyasoft.example.tour.elprit.elpritreview.domain.review.model.Review;
@@ -16,9 +17,11 @@ import java.util.*;
 
 @Service
 public class PointService {
+    @Autowired
+    private ReviewService reviewService;
 
     @Autowired
-    private PlaceService placeService;
+    private PointHistoryRepository pointHistoryRepository;
 
     public List<PointHistory> calculatePoints(Review review, ActionType actionType) {
 
@@ -35,7 +38,7 @@ public class PointService {
         List<PointHistory> pointHistoryList = new ArrayList<>();
 
         // check the user has a review or not
-        if (placeService.doesUserHasReviewForPlace(review.getUniquePlaceUserReview())) {
+        if (reviewService.doesUserHasReviewForPlace(review.getUniquePlaceUserReview())) {
             throw new ReviewAlreadyExistException("Review By this User Already Exist");
         }
 
@@ -43,7 +46,7 @@ public class PointService {
             pointHistoryList.add(PointHistory.getPointHistory(review, ReviewPointType.ADD_CONTENT));
         }
 
-        if (placeService.isItFirstReviewForPlace(review.getUniquePlaceUserReview().getPlaceId())) {
+        if (reviewService.isItFirstReviewForPlace(review.getUniquePlaceUserReview().getPlaceId())) {
             pointHistoryList.add(PointHistory.getPointHistory(review, ReviewPointType.ADD_FIRST_REVIEW));
             review.setFirstReview(true);
         }
@@ -57,7 +60,7 @@ public class PointService {
 
     private List<PointHistory> calculateModifyReviewPoints(Review review) {
         UniquePlaceUserReview uniquePlaceUserReview = review.getUniquePlaceUserReview();
-        Review beforeReview = placeService.getReview(uniquePlaceUserReview);
+        Review beforeReview = reviewService.getReview(uniquePlaceUserReview);
 
         List<PointHistory> pointHistoryList = new ArrayList<>();
 
@@ -93,7 +96,7 @@ public class PointService {
 
     private List<PointHistory> calculateDeleteReviewPoints(Review review) {
         UniquePlaceUserReview uniquePlaceUserReview = review.getUniquePlaceUserReview();
-        Review beforeReview = placeService.getReview(uniquePlaceUserReview);
+        Review beforeReview = reviewService.getReview(uniquePlaceUserReview);
 
         List<PointHistory> pointHistoryList = new ArrayList<>();
 
@@ -122,7 +125,7 @@ public class PointService {
             while (reviewPhotoIterator.hasNext()) {
                 ReviewPhoto reviewPhoto = reviewPhotoIterator.next();
                 if (deleteReviewPhotoIds.contains(reviewPhoto.getId())) {
-                    placeService.deleteReviewPhoto(reviewPhoto);
+                    reviewService.deleteReviewPhoto(reviewPhoto);
                     reviewPhotoIterator.remove();
                 }
             }
@@ -136,5 +139,13 @@ public class PointService {
         }
 
         return pointHistoryList;
+    }
+
+    public boolean storePointHistory(List<PointHistory> pointHistoryList) {
+        pointHistoryList.stream().forEach(pointHistory -> {
+            pointHistoryRepository.save(pointHistory);
+        });
+
+        return true;
     }
 }
