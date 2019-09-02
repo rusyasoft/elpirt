@@ -9,7 +9,7 @@ public enum ReviewPointType {
     ADD_CONTENT("ADD_CONTENT", 1),
     ADD_PHOTO("ADD_PHOTO", 1),
     DELETE_CONTENT("DELETE_CONTENT", -1),
-    DELETE_FIRST_REVIEW("ADD_FIRST_REVIEW", -1),
+    DELETE_FIRST_REVIEW("DELETE_FIRST_REVIEW", -1),
     DELETE_PHOTO("DELETE_PHOTO", -1);
 
     private String code;
